@@ -30,6 +30,10 @@ def main():
         raise SystemExit("entry length %d outside 1-200 characters" % len(text))
     if not text.strip():
         raise SystemExit("entry is blank")
+    if "\n" in text or "\r" in text:
+        raise SystemExit("entry must be a single line")
+    if any(ord(ch) < 0x20 for ch in text):
+        raise SystemExit("entry contains control characters")
     path = resolve_output_path()
     parent = os.path.dirname(path)
     if parent:
